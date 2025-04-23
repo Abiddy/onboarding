@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Filter, validateFilter, prepareFilterForSave } from '@/lib/filters';
+import { Filter, prepareFilterForSave } from '@/lib/filters';
 
 interface UseFiltersOptions {
   category?: string;

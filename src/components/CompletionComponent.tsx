@@ -9,7 +9,7 @@ const CompletionComponent = () => {
         </svg>
       </div>
       
-      <h1 className="text-3xl font-medium text-center mb-3">You're ready to go!</h1>
+      <h1 className="text-3xl font-medium text-center mb-3">You are ready to go!</h1>
       <p className="text-gray-600 text-center text-lg font-medium mb-10">Click the button below to start using Pursuit</p>
       
       <Button className="bg-blue-600 hover:bg-blue-700 min-w-[300px] rounded-md py-6 text-base">

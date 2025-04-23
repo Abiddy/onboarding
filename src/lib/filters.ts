@@ -84,7 +84,6 @@ export function validateFilter(filter: any) {
  * @returns The prepared filter ready for database insertion/update
  */
 export function prepareFilterForSave(filter: Partial<Filter>): Omit<Filter, 'id' | 'user_id' | 'created_at' | 'updated_at'> {
-  const now = new Date().toISOString();
   
   // Set default values for any missing fields
   const preparedFilter = {

@@ -43,11 +43,6 @@ const CompanyProfileComponent = ({ data, updateData }: CompanyProfileProps) => {
     }));
   };
 
-  // Handle keywords update
-  const handleKeywordsChange = (keywords: string[]) => {
-    updateData({ keywords });
-  };
-
   return (
     <div className="max-w-3xl">
       <h1 className="text-3xl font-bold">Company profile</h1>
@@ -100,7 +95,7 @@ const CompanyProfileComponent = ({ data, updateData }: CompanyProfileProps) => {
           <label className="block text-sm font-medium mb-1">
             Prompt <span className="text-red-500">*</span>
           </label>
-          <p className="text-xs text-gray-500 mb-2">Tell us what you're looking for specifically, and the types of opportunities you'd like to find.</p>
+          <p className="text-xs text-gray-500 mb-2">Tell us what you are looking for specifically, and the types of opportunities you would like to find.</p>
           <textarea 
             className="w-full rounded-md border border-gray-300 p-3 min-h-[120px]"
             value={formValues.prompt} 
@@ -128,7 +123,7 @@ const CompanyProfileComponent = ({ data, updateData }: CompanyProfileProps) => {
           <label className="block text-sm font-medium mb-1">
             Target Personas
           </label>
-          <p className="text-xs text-gray-500 mb-2">Select the personas you want to target. We'll find opportunities tailored to your selections</p>
+          <p className="text-xs text-gray-500 mb-2">Select the personas you want to target. We will find opportunities tailored to your selections</p>
           <Select>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />

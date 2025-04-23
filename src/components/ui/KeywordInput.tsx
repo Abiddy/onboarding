@@ -4,12 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { useKeywords } from '@/hooks/useKeywords';
 
-interface Keyword {
-  id: number;
-  keyword: string;
-  category: string;
-}
-
 interface KeywordInputProps {
   category: string;
   placeholder?: string;

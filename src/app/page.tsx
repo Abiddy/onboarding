@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import CompanyProfileComponent from "@/components/CompanyProfileComponent";
 import PersonasComponent from "@/components/PersonasComponent";
@@ -191,7 +191,7 @@ export default function Home() {
             <div className="w-[260px] border-r p-6">
               <div className="bg-white rounded-md overflow-hidden">
                 <nav>
-                  {STEPS.map((step, index) => {
+                  {STEPS.map((step) => {
                     const isActive = currentStep === step;
                     const isCompleted = completedSteps.includes(step);
                     const stepIndex = STEPS.indexOf(step);

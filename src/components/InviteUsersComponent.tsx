@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface InviteUsersData {
   invitedUsers: string[];
@@ -14,7 +13,6 @@ interface InviteUsersProps {
 }
 
 const InviteUsersComponent = ({ data, updateData }: InviteUsersProps) => {
-  const [selectedUser, setSelectedUser] = useState<string>("John Smith");
   const [email, setEmail] = useState("");
   const [invitedEmails, setInvitedEmails] = useState<string[]>(data.invitedUsers || []);
 
@@ -22,14 +20,6 @@ const InviteUsersComponent = ({ data, updateData }: InviteUsersProps) => {
   useEffect(() => {
     updateData({ invitedUsers: invitedEmails });
   }, [invitedEmails]); // Removed updateData from dependencies to prevent infinite loops
-
-  const users = [
-    { name: "John Smith", email: "john.smith@example.com", role: "Admin" },
-    { name: "Sarah Johnson", email: "sarah.j@example.com", role: "Editor" },
-    { name: "Michael Brown", email: "michael.b@example.com", role: "Viewer" },
-    { name: "Emily Davis", email: "emily.davis@example.com", role: "Admin" },
-    { name: "David Wilson", email: "david.w@example.com", role: "Editor" },
-  ];
   
   const handleInvite = () => {
     if (email && isValidEmail(email) && !invitedEmails.includes(email)) {
