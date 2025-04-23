@@ -12,11 +12,11 @@ A step-by-step onboarding flow built with Next.js, Shadcn/UI, and Supabase for d
 - **Form validation** ensuring required fields are completed
 - **Responsive design** for all screen sizes
 - **Reusable components** for consistent UI
-- **RESTful API** for filter persistence and retrieval
+- **RESTful API** for filter persistence and retrieval using Next.js API routes
 
 ## Technologies Used
 
-- **Next.js 14** - React framework with App Router
+- **Next.js 14** - React framework with App Router and API routes
 - **TypeScript** - For type safety and better developer experience
 - **Shadcn/UI** - Component library for modern UI elements
 - **Supabase** - Backend-as-a-service for database and authentication
@@ -47,14 +47,99 @@ onboarding-demo/
 └── supabase-setup.sql - Database schema setup
 ```
 
-## API Documentation
+## API Implementation
 
-### Filter API
+This project leverages Next.js API routes to create a robust and type-safe backend API for managing filters. The API implementation follows RESTful principles and includes:
+
+### Server-Side API Routes (Next.js App Router)
+
+Next.js App Router simplifies creating backend APIs by using file-system based routing:
+
+- **Route Structure**: API routes are defined in the `app/api` directory, with each file representing an endpoint.
+- **Request Handlers**: Each route exports HTTP method handlers (`GET`, `POST`, `PATCH`, `DELETE`).
+- **Type Safety**: All routes use TypeScript for input validation and response formatting.
+- **Error Handling**: Comprehensive error handling with appropriate HTTP status codes.
+
+### Database Integration
+
+The API endpoints interact directly with Supabase:
+
+```typescript
+// Example of API route with Supabase integration
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    
+    let query = supabase
+      .from('filters')
+      .select('*');
+    
+    if (category) {
+      query = query.eq('category', category);
+    }
+    
+    const { data, error } = await query;
+    
+    // Error handling and response
+    // ...
+    
+    return NextResponse.json({ filters: data });
+  } catch (error) {
+    // Error handling
+  }
+}
+```
+
+### Data Validation
+
+The API uses Zod schemas for robust data validation:
+
+```typescript
+// Validation schema using Zod
+export const FilterSchema = z.object({
+  id: z.number().optional(),
+  name: z.string().min(1, "Name is required"),
+  category: z.string().min(1, "Category is required"),
+  criteria: FilterCriteriaSchema,
+  is_active: z.boolean().default(true),
+  // ...
+});
+```
+
+### Client-Side Integration
+
+Custom React hooks provide a clean interface for interacting with the API:
+
+```typescript
+// useFilters hook for client-side API consumption
+export function useFilters(options = {}) {
+  // ... state management
+  
+  const fetchFilters = async () => {
+    // API call implementation
+    const response = await fetch('/api/filters');
+    // ... processing
+  };
+  
+  // ... other CRUD operations
+  
+  return {
+    filters,
+    loading,
+    error,
+    fetchFilters,
+    // ... other methods
+  };
+}
+```
+
+## Filter API Documentation
 
 The application provides a comprehensive RESTful API for managing filters:
 
 #### `GET /api/filters`
-- **Description**: Retrieve all filters for the current user
+- **Description**: Retrieve all filters, with optional category filtering
 - **Query Parameters**:
   - `category` (optional): Filter by category
 - **Response**: `{ filters: Filter[] }`
@@ -80,19 +165,6 @@ The application provides a comprehensive RESTful API for managing filters:
   ```
 - **Response**: `{ filter: Filter }`
 
-#### `GET /api/filters/[id]`
-- **Description**: Retrieve a specific filter by ID
-- **Response**: `{ filter: Filter }`
-
-#### `PATCH /api/filters/[id]`
-- **Description**: Update a specific filter
-- **Request Body**: Partial filter object
-- **Response**: `{ filter: Filter }`
-
-#### `DELETE /api/filters/[id]`
-- **Description**: Delete a specific filter
-- **Response**: `{ success: true }`
-
 ### Filter Schema
 
 Filters follow this schema:
@@ -111,7 +183,6 @@ Filters follow this schema:
     logic: "and" | "or";
   };
   is_active: boolean;
-  user_id: string;
   created_at: string;
   updated_at: string;
 }
@@ -154,11 +225,12 @@ Filters follow this schema:
    - Implemented step availability based on completion status
    - Added back/next navigation with appropriate controls
 
-8. **Filter API Development**
-   - Designed RESTful API endpoints for filter management
-   - Implemented validation with Zod schema
-   - Created client-side hooks for API interaction
-   - Added filter application functionality
+8. **API Development with Next.js Routes**
+   - Leveraged Next.js App Router for creating API endpoints
+   - Implemented file-system based routing for API organization
+   - Created type-safe request handlers with proper error handling
+   - Connected API routes directly to Supabase for data persistence
+   - Implemented schema validation with Zod for API request/response safety
 
 ## Getting Started
 
@@ -215,9 +287,8 @@ export default function FilterPage() {
     filters, 
     loading, 
     error, 
-    createFilter, 
-    updateFilter, 
-    deleteFilter 
+    fetchFilters, 
+    createFilter
   } = useFilters({ category: 'personas' });
   
   const handleCreateFilter = async () => {
@@ -262,7 +333,8 @@ During this project, we:
 5. **Implemented TypeScript** for better type safety and documentation
 6. **Integrated Supabase** for real-time database operations
 7. **Designed a RESTful API** following best practices for data management
-8. **Implemented schema validation** with Zod for type safety
+8. **Implemented Next.js API routes** for a seamless frontend-backend integration
+9. **Used schema validation** with Zod for type safety
 
 ## Future Improvements
 
@@ -272,6 +344,7 @@ During this project, we:
 - Create a dashboard view after onboarding completion
 - Add comprehensive testing with Jest and React Testing Library
 - Implement filter sharing capabilities between users
+- Expand API capabilities with pagination and advanced filtering
 
 ## License
 
