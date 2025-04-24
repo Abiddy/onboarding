@@ -2,6 +2,8 @@
 
 A step-by-step onboarding flow built with Next.js, Shadcn/UI, and Supabase for data persistence. This application demonstrates a multi-step validation process with a progress tracker and real-time data storage.
 
+
+
 ![Onboarding Screenshot](https://placeholder-for-screenshot.png)
 
 ## Features
@@ -345,7 +347,3 @@ During this project, we:
 - Add comprehensive testing with Jest and React Testing Library
 - Implement filter sharing capabilities between users
 - Expand API capabilities with pagination and advanced filtering
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
